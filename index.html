@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Eudaimonia Machine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="hero-label">A Framework for AI-Driven Ontological Optimization</div>
+        <h1>The Eudaimonia Machine</h1>
+        <p class="tagline">The "Problem of Suffering" is not a biological misfortune. It is a systemic engineering failure. We are transitioning from the pursuit of happiness to its engineered baseline.</p>
+        
+        <nav class="navigation">
+            <button onclick="loadComponent('architecture.html', this)" class="nav-link active">The Architecture</button>
+            <button onclick="loadComponent('timeline.html', this)" class="nav-link">The Transition Timeline</button>
+        </nav>
+    </header>
+
+    <div class="container" id="dynamic-content">
+        </div>
+
+    <section class="cta" id="cta-footer">
+        <h2>Join the Ontological Engineering</h2>
+        <p>Humanity does not need to abdicate agency to achieve this; instead, we collaborate with AI, taking its precise suggestions to seamlessly align global logistics with human necessity. We are seeking collaborators, neuroscientists, and systems engineers.</p>
+        <button onclick="loadComponent('collaboration.html', null)" class="btn">Initiate Collaboration</button>
+    </section>
+
+    <script>
+        async function loadComponent(fileName, buttonElement) {
+            try {
+                // Fetch and inject the content
+                const response = await fetch(fileName);
+                const htmlContent = await response.text();
+                document.getElementById('dynamic-content').innerHTML = htmlContent;
+
+                // Update active states for the top navigation buttons
+                if (buttonElement) {
+                    document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+                    buttonElement.classList.add('active');
+                } else if (fileName === 'collaboration.html') {
+                    // If triggered by the footer button, remove active state from top nav
+                    document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+                }
+
+                // Hide the CTA footer if we are on the collaboration page
+                const footer = document.getElementById('cta-footer');
+                if (fileName === 'collaboration.html') {
+                    footer.style.display = 'none';
+                } else {
+                    footer.style.display = 'block';
+                }
+
+                // Smooth scroll to the content area
+                window.scrollTo({
+                    top: document.getElementById('dynamic-content').offsetTop - 50,
+                    behavior: 'smooth'
+                });
+
+            } catch (error) {
+                console.error("Error loading component:", error);
+                document.getElementById('dynamic-content').innerHTML = "<p>Error loading content.</p>";
+            }
+        }
+
+        // Auto-load the architecture section when the page first opens
+        window.onload = () => {
+            loadComponent('architecture.html', document.querySelector('.nav-link.active'));
+        };
+    </script>
+</body>
+</html>

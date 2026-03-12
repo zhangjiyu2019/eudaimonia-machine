@@ -250,3 +250,22 @@ textarea.form-control {
     resize: vertical;
     min-height: 150px;
 }
+
+/* Logo Positioning */
+.logo-container {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    z-index: 100;
+}
+
+.logo {
+    width: 60px; /* Adjust this value to make the logo bigger or smaller */
+    height: auto;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.logo:hover {
+    opacity: 1;
+}

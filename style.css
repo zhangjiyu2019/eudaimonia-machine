@@ -202,6 +202,27 @@ h2 {
     margin: 0;
 }
 
+.library-doc-card {
+    text-align: left;
+}
+
+.library-doc-card h3 {
+    font-size: 1.2rem;
+    line-height: 1.35;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.library-doc-card p {
+    margin-bottom: 0;
+}
+
+.library-doc-card .btn {
+    margin-top: 1.75rem;
+}
+
 /* Content Blocks & Quotes */
 .content-block {
     margin-bottom: 4rem;

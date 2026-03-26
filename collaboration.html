@@ -1,30 +1,43 @@
-<section>
+<section class="collaboration-panel">
+    <button type="button" class="collab-close" onclick="closeCollaborationPage()" aria-label="Close">&times;</button>
+
     <h2>Initiate Collaboration</h2>
-    
+
     <div class="content-block" style="margin: 0 auto 3rem auto; text-align: center;">
         <p>Humanity does not need to abdicate agency to achieve this; instead, we collaborate with AI, taking its precise suggestions to seamlessly align global logistics with human necessity.</p>
-        <p>Please outline your discipline and proposed vector of integration into the Eudaimonia Machine architecture.</p>
+        <p>Please outline your discipline and proposed vector of integration into the Happiness Machine architecture.</p>
     </div>
 
     <div class="form-container">
-        <form action="mailto:your-email@example.com" method="POST" enctype="text/plain">
+        <!-- Submissions via Web3Forms: https://web3forms.com -->
+        <form id="collab-form" action="#" method="post">
+            <input type="hidden" name="access_key" id="web3forms-access-key" value="0a401a98-9336-483d-b409-40195b901437" autocomplete="off">
+            <input type="text" name="botcheck" tabindex="-1" autocomplete="off" class="collab-honeypot" aria-hidden="true" title="Leave empty">
+
             <div class="form-group">
-                <label for="name">Designation / Name</label>
-                <input type="text" id="name" name="name" class="form-control" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="discipline">Primary Discipline (e.g., Engineering, Neuroscience, Philosophy)</label>
-                <input type="text" id="discipline" name="discipline" class="form-control" required>
+                <label for="collab-name">Designation / Name</label>
+                <input type="text" id="collab-name" name="name" class="form-control" required autocomplete="name">
             </div>
 
             <div class="form-group">
-                <label for="message">Proposed Vector of Collaboration</label>
-                <textarea id="message" name="message" class="form-control" placeholder="How does your expertise align with the physical or ontological engineering of this framework?" required></textarea>
+                <label for="collab-email">Your email</label>
+                <input type="email" id="collab-email" name="email" class="form-control" required autocomplete="email" placeholder="So we can reply to you">
             </div>
+
+            <div class="form-group">
+                <label for="collab-discipline">Primary Discipline (e.g., Engineering, Neuroscience, Philosophy)</label>
+                <input type="text" id="collab-discipline" name="discipline" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="collab-message">Proposed Vector of Collaboration</label>
+                <textarea id="collab-message" name="message" class="form-control" placeholder="How does your expertise align with the physical or ontological engineering of this framework?" required></textarea>
+            </div>
+
+            <p id="collab-form-status" class="collab-form-status" role="status" aria-live="polite"></p>
 
             <div style="text-align: center; margin-top: 2rem;">
-                <button type="submit" class="btn">Submit Proposal</button>
+                <button type="submit" class="btn" id="collab-submit">Submit Proposal</button>
             </div>
         </form>
     </div>

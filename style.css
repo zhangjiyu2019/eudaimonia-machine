@@ -17,16 +17,66 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Header & Navigation */
-header {
-    min-height: 80vh;
+/* Header — full-viewport image; title/tagline top; three nav buttons anchored to bottom of first screen */
+header.site-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
     padding: 2rem;
-    border-bottom: 1px solid var(--border);
+    padding-top: clamp(4.25rem, 10vh, 6.5rem);
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+    padding-bottom: clamp(1.25rem, 4vh, 2.75rem);
+    border-bottom: none;
+    box-sizing: border-box;
+}
+
+header.site-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: #050508;
+    background-image: url("hero-bg.png");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    /* Full color — no desaturation */
+}
+
+header.site-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    /* Top dark for logo/title; bottom stays lighter so river / park shows through */
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.82) 0%,
+        rgba(0, 0, 0, 0.28) 38%,
+        rgba(0, 0, 0, 0.22) 55%,
+        rgba(0, 0, 0, 0.18) 78%,
+        rgba(0, 0, 0, 0.35) 100%
+    );
+}
+
+header.site-hero > *:not(.logo-container) {
+    position: relative;
+    z-index: 2;
+}
+
+header.site-hero .hero-label,
+header.site-hero h1,
+header.site-hero .tagline,
+header.site-hero .navigation {
+    text-shadow: 0 0 48px rgba(0, 0, 0, 0.95), 0 2px 14px rgba(0, 0, 0, 0.85);
 }
 
 .hero-label {
@@ -50,13 +100,21 @@ h1 {
     color: var(--dim-text);
     max-width: 700px;
     margin-top: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
 }
 
 .navigation {
     display: flex;
     gap: 2rem;
     margin-top: 2rem;
+}
+
+header.site-hero .navigation {
+    margin-top: auto;
+    padding-top: 1rem;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .nav-link {
@@ -82,6 +140,11 @@ h1 {
     max-width: 1100px;
     margin: 0 auto;
     padding: 5rem 2rem;
+}
+
+/* Main column (Architecture, etc.): solid black & white — no hero image */
+#dynamic-content.container {
+    background-color: var(--bg);
 }
 
 h2 {
@@ -169,6 +232,112 @@ h2 {
     color: var(--text);
 }
 
+/* Standalone About page (full document, not injected) */
+body.about-standalone {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: var(--bg);
+}
+
+.about-standalone-logo {
+    position: fixed;
+    top: calc(1.5rem + env(safe-area-inset-top, 0px));
+    left: calc(1.5rem + env(safe-area-inset-left, 0px));
+    z-index: 90;
+}
+
+.about-standalone-logo .logo {
+    width: 44px;
+    height: auto;
+    opacity: 0.42;
+    transition: opacity 0.35s ease;
+    display: block;
+}
+
+.about-standalone-logo:hover .logo {
+    opacity: 1;
+}
+
+.about-standalone-main {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5.5rem 2rem 3rem;
+    box-sizing: border-box;
+}
+
+.about-standalone-inner {
+    width: 100%;
+    max-width: 42rem;
+}
+
+.about-standalone-title {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+    margin: 0 0 2.25rem 0;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.about-back-link {
+    margin-top: 3rem;
+    margin-bottom: 0;
+}
+
+.about-back-anchor {
+    color: var(--dim-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.about-back-anchor:hover {
+    color: var(--text);
+    border-bottom-color: var(--text);
+}
+
+/* About (injected fragment — unused if only standalone; kept for compatibility) */
+.about-page h2 {
+    margin-bottom: 2.25rem;
+}
+
+.about-quote {
+    margin: 0 0 3rem 0;
+    max-width: 36rem;
+}
+
+.about-quote p {
+    margin: 0 0 0.65rem 0;
+}
+
+.quote-attribution {
+    display: block;
+    font-style: normal;
+    font-size: 0.92rem;
+    color: var(--dim-text);
+    margin: 0;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.about-body {
+    margin-bottom: 2rem;
+    max-width: 40rem;
+}
+
+.about-body p {
+    font-size: 1.2rem;
+    line-height: 1.75;
+}
+
 /* CTA Section */
 .cta {
     text-align: center;
@@ -206,6 +375,39 @@ h2 {
 @media (max-width: 768px) {
     h1 { font-size: 2.5rem; }
     h2 { font-size: 2rem; }
+
+    header.site-hero {
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 5rem 1.25rem 1.25rem;
+        padding-top: clamp(4.25rem, 11vh, 6rem);
+    }
+
+    header.site-hero::before {
+        background-position: center top;
+    }
+
+    .navigation {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem 1.5rem;
+    }
+
+    header.site-hero .navigation {
+        margin-top: clamp(1.25rem, 3vh, 2rem);
+    }
+
+    header.site-hero .logo {
+        width: 38px;
+    }
+
+    .about-standalone-logo .logo {
+        width: 38px;
+    }
+
+    .about-standalone-title {
+        font-size: 2rem;
+    }
 }
 
 /* Form Styles */
@@ -251,21 +453,75 @@ textarea.form-control {
     min-height: 150px;
 }
 
-/* Logo Positioning */
-.logo-container {
+/* Collaboration panel */
+.collaboration-panel {
+    position: relative;
+}
+
+.collab-close {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 200;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    margin: 0;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+}
+
+.collab-close:hover {
+    border-color: var(--hover-border);
+    background: var(--text);
+    color: var(--bg);
+}
+
+.collab-honeypot {
     position: absolute;
-    top: 2rem;
-    left: 2rem;
-    z-index: 100;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
 }
 
-.logo {
-    width: 60px; /* Adjust this value to make the logo bigger or smaller */
+.collab-form-status {
+    text-align: center;
+    color: var(--dim-text);
+    font-size: 1rem;
+    min-height: 1.5rem;
+    margin: 1rem 0 0 0;
+}
+
+.collab-form-status:not(:empty) {
+    color: var(--text);
+}
+
+/* Logo — fixed top-left on every scroll position */
+header.site-hero .logo-container {
+    position: fixed;
+    top: calc(1.5rem + env(safe-area-inset-top, 0px));
+    left: calc(1.5rem + env(safe-area-inset-left, 0px));
+    z-index: 90;
+}
+
+header.site-hero .logo {
+    width: 44px;
     height: auto;
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
+    opacity: 0.42;
+    transition: opacity 0.35s ease;
+    display: block;
 }
 
-.logo:hover {
+header.site-hero .logo-container:hover .logo {
     opacity: 1;
 }

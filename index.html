@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Eudaimonia Machine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>The Happiness Machine</title>
     <meta name="description" content="A framework for AI-driven ontological optimization. Transitioning from the pursuit of happiness to its engineered baseline.">
-    <meta name="keywords" content="Eudaimonia, Happiness, AI, Post-Scarcity, Ontological Engineering, Neuroscience">
+    <meta name="keywords" content="Happiness Machine, AI, Post-Scarcity, Ontological Engineering, Neuroscience">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
+    <header class="site-hero">
         <div class="logo-container">
-            <a href="index.html">
+            <a href="about.html" aria-label="About Team Pivot">
                 <img src="Pivot.png" alt="Pivot Studio Logo" class="logo">
             </a>
         </div>
@@ -38,23 +38,113 @@
     </section>
 
     <script>
+        function closeCollaborationPage() {
+            const archButton = document.querySelector('.navigation .nav-link');
+            loadComponent('architecture.html', archButton);
+        }
+
+        function initCollaborationForm() {
+            const form = document.getElementById('collab-form');
+            const statusEl = document.getElementById('collab-form-status');
+            const submitBtn = document.getElementById('collab-submit');
+            const keyInput = document.getElementById('web3forms-access-key');
+            if (!form || form.dataset.bound === '1') return;
+            form.dataset.bound = '1';
+
+            const accessKey = keyInput && keyInput.value ? keyInput.value.trim() : '';
+            const keyMissing = !accessKey || accessKey === 'WEB3FORMS_ACCESS_KEY';
+
+            if (keyMissing) {
+                if (statusEl) {
+                    statusEl.textContent =
+                        'Add your Web3Forms access key: sign up at web3forms.com, copy the key, and replace WEB3FORMS_ACCESS_KEY in collaboration.html.';
+                }
+                if (submitBtn) submitBtn.disabled = true;
+            }
+
+            if (statusEl && location.protocol === 'file:' && !keyMissing) {
+                statusEl.textContent =
+                    'If submit fails, open this site through a local server (e.g. npx serve) instead of double-clicking the HTML file.';
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (keyMissing) return;
+
+                const honeypot = form.querySelector('input[name="botcheck"]');
+                if (honeypot && honeypot.value.trim()) {
+                    return;
+                }
+
+                const name = document.getElementById('collab-name')?.value?.trim() || '';
+                const email = document.getElementById('collab-email')?.value?.trim() || '';
+                const discipline = document.getElementById('collab-discipline')?.value?.trim() || '';
+                const message = document.getElementById('collab-message')?.value?.trim() || '';
+
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Sending…';
+                }
+                if (statusEl) statusEl.textContent = '';
+
+                const payload = {
+                    access_key: accessKey,
+                    subject: 'Happiness Machine — collaboration proposal',
+                    name,
+                    email,
+                    message: `Discipline: ${discipline}\n\n${message}`,
+                };
+
+                try {
+                    const res = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Accept: 'application/json',
+                        },
+                        body: JSON.stringify(payload),
+                    });
+                    const data = await res.json().catch(() => ({}));
+                    if (data.success) {
+                        if (statusEl) {
+                            statusEl.textContent = 'Thank you — your proposal was sent. We will be in touch.';
+                        }
+                        form.reset();
+                    } else if (statusEl) {
+                        statusEl.textContent =
+                            (data.message && String(data.message)) ||
+                            'Could not send. Check your access key and try again.';
+                    }
+                } catch (err) {
+                    if (statusEl) {
+                        statusEl.textContent =
+                            'Could not reach the form service. Use a local dev server (not file://) or check your network.';
+                    }
+                }
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Proposal';
+                }
+            });
+        }
+
         async function loadComponent(fileName, buttonElement) {
             try {
-                // Fetch and inject the content
                 const response = await fetch(fileName);
                 const htmlContent = await response.text();
                 document.getElementById('dynamic-content').innerHTML = htmlContent;
 
-                // Update active states for the top navigation buttons
+                if (fileName === 'collaboration.html') {
+                    initCollaborationForm();
+                }
+
                 if (buttonElement) {
                     document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
                     buttonElement.classList.add('active');
                 } else if (fileName === 'collaboration.html') {
-                    // If triggered by the footer button, remove active state from top nav
                     document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
                 }
 
-                // Hide the CTA footer if we are on the collaboration page
                 const footer = document.getElementById('cta-footer');
                 if (fileName === 'collaboration.html') {
                     footer.style.display = 'none';
@@ -62,24 +152,20 @@
                     footer.style.display = 'block';
                 }
 
-                // Smooth scroll to the content area
                 window.scrollTo({
                     top: document.getElementById('dynamic-content').offsetTop - 50,
                     behavior: 'smooth'
                 });
 
             } catch (error) {
-                console.error("Error loading component:", error);
+                console.error("Error loading content:", error);
                 document.getElementById('dynamic-content').innerHTML = "<p>Error loading content.</p>";
             }
         }
 
-        // Auto-load the architecture section when the page first opens
         window.onload = () => {
             loadComponent('architecture.html', document.querySelector('.nav-link.active'));
         };
     </script>
 </body>
-
 </html>
-

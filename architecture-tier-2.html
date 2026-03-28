@@ -1,0 +1,30 @@
+<section class="architecture-page architecture-tier-detail">
+    <p class="architecture-back">
+        <button type="button" class="architecture-back-btn" onclick="loadComponent('architecture.html', document.getElementById('nav-architecture'))">← Core Architecture</button>
+    </p>
+    <h2>II · Prediction engine</h2>
+    <p class="architecture-tier-sub">The world model simulation</p>
+
+    <div class="content-block">
+        <p>The engine of the Happiness Machine is a <strong>high-fidelity world model</strong>: a learned simulator of social, economic, and environmental dynamics. It is used not only to forecast what might happen, but to run <strong>counterfactual societies</strong>—mental rehearsal at civilizational scale—before commitments harden into infrastructure and law.</p>
+        <p><strong>Multi-agent reinforcement learning (MARL)</strong> populates that simulator with heterogeneous agents whose objectives, beliefs, and constraints differ. The search is for policies and designs (norms, incentives, spatial layouts, resource flows) that improve a collective welfare functional while preserving room for individual trajectories that do not match the median definition of “the good life.”</p>
+    </div>
+
+    <div class="content-block">
+        <h3>Predictive optimization</h3>
+        <p>Beyond passive forecasting, the system asks what <em>should</em> happen to increase flourishing: it maps <strong>friction points</strong>—places where institutions, markets, or built environments systematically suppress healthy inner motion (time poverty, chronic unpredictability, isolation, misaligned incentives). Interventions are scored by their predicted effect on the latent psychological state distribution, not only GDP or efficiency.</p>
+    </div>
+
+    <div class="content-block">
+        <h3>Scaffolding and outliers</h3>
+        <p>Any aggregate optimum risks crushing minorities of taste, neurotype, or vocation. The simulation therefore includes <strong>shadow infrastructure</strong>: optional pathways, enclaves, and support nets for outliers—people whose flourishing genuinely diverges from the group optimum—so they retain a <strong>safe-failure</strong> volume in which to experiment without collapsing into harm or exitlessness.</p>
+    </div>
+
+    <div class="content-block">
+        <h3>Autonomy as a hard constraint</h3>
+        <p>To avoid <strong>algorithmic paternalism</strong>, agency is not something the optimizer maximizes only when convenient—it is enforced as a constraint on every proposed solution. Informally: maximize welfare subject to keeping the user’s <strong>option space</strong> rich enough that choice remains real.</p>
+        <p class="architecture-equation">max <var>W</var> &nbsp;subject to&nbsp; <var>H</var>(actions) ≥ <var>H</var><sub>min</sub></p>
+        <p>Here <var>W</var> is the welfare functional (possibly distributional, not only utilitarian). <var>H</var> is a measure of <strong>information entropy</strong> over the set of meaningful actions available to the individual or cohort—<var>H</var><sub>min</sub> is a floor below which “optimization” is rejected as coercion dressed in metrics.</p>
+        <p>This does not solve all normative questions; it forces the machine to internalize a tradeoff surface between care and control that naive maximizers often erase.</p>
+    </div>
+</section>

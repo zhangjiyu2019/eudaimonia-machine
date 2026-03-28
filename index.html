@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- Google tag (gtag.js) — Measurement ID G-31PNPMHK32 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-31PNPMHK32"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-31PNPMHK32');
+      gtag('config', 'G-31PNPMHK32', {
+        send_page_view: false,
+        page_path: location.pathname + location.search,
+        page_location: location.href
+      });
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>The Happiness Machine</title>
     <meta name="description" content="A framework for AI-driven ontological optimization. Transitioning from the pursuit of happiness to its engineered baseline.">
     <meta name="keywords" content="Happiness Machine, AI, Post-Scarcity, Ontological Engineering, Neuroscience">
@@ -30,9 +34,10 @@
         <p class="tagline">The "Problem of Suffering" is not a biological misfortune. It is a systemic engineering failure. We are transitioning from the pursuit of happiness to its engineered baseline.</p>
         
         <nav class="navigation">
-            <button onclick="loadComponent('architecture.html', this)" class="nav-link active">Architecture</button>
+            <button type="button" id="nav-architecture" onclick="loadComponent('architecture.html', this)" class="nav-link active">Architecture</button>
             <button onclick="loadComponent('timeline.html', this)" class="nav-link">Transition Timeline</button>
-            <button onclick="loadComponent('library.html', this)" class="nav-link">Library</button>
+            <button onclick="loadComponent('live-workspace.html', this)" class="nav-link">Live Workspace</button>
+            <button onclick="loadComponent('resources.html', this)" class="nav-link">Resources</button>
         </nav>
     </header>
 
@@ -47,7 +52,7 @@
 
     <script>
         function closeCollaborationPage() {
-            const archButton = document.querySelector('.navigation .nav-link');
+            const archButton = document.getElementById('nav-architecture');
             loadComponent('architecture.html', archButton);
         }
 
@@ -136,11 +141,43 @@
             });
         }
 
+        function gtagSectionPageView(fileName) {
+            if (typeof gtag !== 'function') return;
+            const slug = fileName.replace(/\.html$/i, '');
+            let base = window.location.pathname;
+            if (/index\.html?$/i.test(base)) {
+                base = base.replace(/index\.html?$/i, '');
+            } else if (!base.endsWith('/')) {
+                base = base.slice(0, base.lastIndexOf('/') + 1);
+            }
+            if (!base.endsWith('/')) base += '/';
+            const page_path = base + slug;
+            const page_location = window.location.origin + page_path;
+            gtag('event', 'page_view', {
+                page_path: page_path,
+                page_location: page_location,
+                page_title: slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ')
+            });
+        }
+
+        function openArchitectureTier(fileName) {
+            loadComponent(fileName, document.getElementById('nav-architecture'));
+        }
+
+        function architectureTierCardKeydown(event, fileName) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openArchitectureTier(fileName);
+            }
+        }
+
         async function loadComponent(fileName, buttonElement) {
             try {
                 const response = await fetch(fileName);
                 const htmlContent = await response.text();
                 document.getElementById('dynamic-content').innerHTML = htmlContent;
+
+                gtagSectionPageView(fileName);
 
                 if (fileName === 'collaboration.html') {
                     initCollaborationForm();
@@ -172,7 +209,7 @@
         }
 
         window.onload = () => {
-            loadComponent('architecture.html', document.querySelector('.nav-link.active'));
+            loadComponent('architecture.html', document.getElementById('nav-architecture'));
         };
     </script>
 </body>

@@ -202,6 +202,112 @@ h2 {
     margin: 0;
 }
 
+.architecture-page .card p + p {
+    margin-top: 1rem;
+}
+
+.architecture-page .card h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 1.35rem 0 0.5rem 0;
+}
+
+.architecture-page .card h3 + p {
+    margin-top: 0;
+}
+
+.architecture-page .card ul {
+    color: var(--dim-text);
+    font-size: 1.05rem;
+    margin: 0 0 0.25rem 0;
+    padding-left: 1.25rem;
+}
+
+.architecture-page .card p + ul {
+    margin-top: 0.65rem;
+}
+
+.architecture-page .card li {
+    margin-bottom: 0.5rem;
+}
+
+.architecture-page .architecture-equation {
+    font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+    font-size: 1.05rem;
+    color: var(--text);
+    text-align: center;
+    margin: 1rem 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+}
+
+.architecture-page .architecture-equation var {
+    font-style: italic;
+}
+
+.architecture-tier-card {
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.architecture-tier-card:focus {
+    outline: none;
+}
+
+.architecture-tier-card:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 3px;
+}
+
+.architecture-tier-cta {
+    display: block;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--dim-text);
+    letter-spacing: 0.04em;
+}
+
+.architecture-back {
+    margin: 0 0 1.5rem 0;
+}
+
+.architecture-back-btn {
+    background: none;
+    border: none;
+    color: var(--dim-text);
+    font: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+}
+
+.architecture-back-btn:hover {
+    color: var(--text);
+}
+
+.architecture-tier-detail h2 {
+    margin-bottom: 0.35rem;
+}
+
+.architecture-tier-sub {
+    color: var(--dim-text);
+    font-size: 1.15rem;
+    margin: 0 0 2rem 0;
+}
+
+.architecture-tier-detail .content-block h3 {
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 1.2rem;
+}
+
 .library-doc-card {
     text-align: left;
 }
@@ -221,6 +327,54 @@ h2 {
 
 .library-doc-card .btn {
     margin-top: 1.75rem;
+}
+
+.web-resources-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.web-resources-list li {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.web-resources-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.web-resource-link {
+    color: var(--text);
+    text-decoration: none;
+    display: block;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.web-resource-link:hover {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+}
+
+.web-resource-domain {
+    color: var(--dim-text);
+}
+
+.library-placeholder {
+    color: var(--dim-text);
+    font-size: 1.05rem;
+    line-height: 1.55;
+    margin: 0 0 1rem 0;
+}
+
+.web-resources-card:has(.library-books-list li) .library-placeholder {
+    display: none;
 }
 
 /* Content Blocks & Quotes */
